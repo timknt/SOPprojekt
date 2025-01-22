@@ -3,6 +3,4 @@ project(SOPprojekt C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(Main main.c)
-add_executable(LinkedList linkedList.c)
-add_executable(ReadFile readFile.c)
+add_executable(Main main.c greppy_args.c linkedList.c readFile.c)

@@ -81,7 +81,7 @@ void concatenateLists(Node** head1, Node* head2) {
     temp->next = head2;
 }
 
-int main() {
+int testLinkedList() {
     Node* head = NULL;
 
     Data d1 = {"Erster Eintrag", 1};

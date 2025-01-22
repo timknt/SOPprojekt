@@ -23,7 +23,7 @@ char *readFile(char *filename) {
     return buffer;
 }
 
-int main() {
+int testReadFile() {
     const char *filename = "Testing/test.txt";
 
     char *content = readFile((char *)filename);

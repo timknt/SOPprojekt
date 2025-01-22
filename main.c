@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include "greppy_args.h"
+#include "linkedList.h"
+#include "readFile.h"
 
 int main(int argc, char *argv[]) {
+
+    //testLinkedList();
+    //testReadFile();
+
     GrepOptions options = {0};
 
     parse_arguments(argc, argv, &options);
