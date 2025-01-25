@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+#include "caseInsensitive.h"
 #include "greppy_args.h"
 #include "linkedList.h"
 #include "readFile.h"
@@ -7,6 +9,7 @@ int main(int argc, char *argv[]) {
 
     //testLinkedList();
     //testReadFile();
+    //testCaseInsensitive();
 
     GrepOptions options = {0};
 
