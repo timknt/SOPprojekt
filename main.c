@@ -1,32 +1,48 @@
 #include <stdio.h>
-
-#include "caseInsensitive.h"
+#include <stdlib.h>
 #include "greppy_args.h"
-#include "linkedList.h"
-#include "readFile.h"
 
 int main(int argc, char *argv[]) {
-
-    //testLinkedList();
-    //testReadFile();
-    //testCaseInsensitive();
-
     GrepOptions options = {0};
 
     parse_arguments(argc, argv, &options);
+    validate_arguments(&options);
 
-    printf("Options:\n");
-    printf("  Quiet: %d\n", options.quiet);
-    printf("  Max Count Set: %d\n", options.max_count_set);
-    printf("  Max Count: %d\n", options.max_count);
-    printf("  Count: %d\n", options.count);
-    printf("  Recursive: %d\n", options.recursive);
-    printf("  Case Insensitive: %d\n", options.case_insensitive);
-    printf("  From Stdin: %d\n", options.from_stdin);
-    printf("  Search Text: %s\n", options.search_text);
-    printf("  File/Dir: %s\n", options.file_or_dir ? options.file_or_dir : "(none)");
+    if (options.quiet) {
+        printf("Quiet mode enabled. No output will be displayed.\n");
+    }
 
-    //logic
+    if (options.recursive) {
+        printf("Recursive search enabled.\n");
+    }
+
+    if (options.case_insensitive) {
+        printf("Case-insensitive search enabled.\n");
+    }
+
+    if (options.count) {
+        printf("Match count will be displayed instead of matches.\n");
+    }
+
+    if (options.max_count_set) {
+        printf("Maximum number of matches to display: %d\n", options.max_count);
+    }
+
+    if (options.from_stdin) {
+        printf("Reading input from stdin. Enter text:\n");
+    }
+
+    if (options.search_text) {
+        printf("Searching for: %s\n", options.search_text);
+    }
+
+    if (options.file_or_dir) {
+        printf("Searching in: %s\n", options.file_or_dir);
+    } else {
+        printf("No file or directory specified. Defaulting to stdin.\n");
+    }
+
+    printf("Arguments processed successfully. Ready to perform the search.\n");
 
     return 0;
 }
