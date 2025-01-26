@@ -16,6 +16,7 @@ void print_usage(const char *prog_name) {
     printf("  \"search_text\" Text to search for (required)\n");
     printf("  [file/dir]    File or directory to search in (optional)\n");
 }
+
 void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     int opt;
 
@@ -23,24 +24,24 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
         switch (opt) {
             case 'q':
                 options->quiet = true;
-            break;
+                break;
             case 'm':
                 options->max_count_set = true;
-            options->max_count = atoi(optarg);
-            break;
+                options->max_count = atoi(optarg);
+                break;
             case 'c':
                 options->count = true;
-            break;
+                break;
             case 'r':
                 options->recursive = true;
-            break;
+                break;
             case 'i':
                 options->case_insensitive = true;
-            break;
+                break;
             case '?':
-                default:
-                    print_usage(argv[0]);
-            exit(EXIT_FAILURE);
+            default:
+                print_usage(argv[0]);
+                exit(EXIT_FAILURE);
         }
     }
 
@@ -56,5 +57,21 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
         options->file_or_dir = argv[optind++];
     } else {
         options->from_stdin = true;
+    }
+}
+
+void validate_arguments(GrepOptions *options) {
+    if (options->search_text == NULL) {
+        fprintf(stderr, "Error: search_text is required.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (options->file_or_dir && options->file_or_dir[0] == '-') {
+        fprintf(stderr, "Error: Invalid argument '%s'. No dashes allowed as file or directory name.\n", options->file_or_dir);
+        exit(EXIT_FAILURE);
+    }
+
+    if (options->from_stdin) {
+        printf("Reading from stdin. Please provide input:\n");
     }
 }

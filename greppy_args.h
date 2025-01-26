@@ -11,9 +11,12 @@ typedef struct {
     bool recursive;
     bool case_insensitive;
     bool from_stdin;
-    char *search_text;
-    char *file_or_dir;
+    const char *search_text;
+    const char *file_or_dir;
 } GrepOptions;
 
+void print_usage(const char *prog_name);
 void parse_arguments(int argc, char *argv[], GrepOptions *options);
+void validate_arguments(GrepOptions *options);
+
 #endif // GREPPY_ARGS_H
