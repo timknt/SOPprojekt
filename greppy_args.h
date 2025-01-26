@@ -11,8 +11,8 @@ typedef struct {
     bool recursive;
     bool case_insensitive;
     bool from_stdin;
-    const char *search_text;
-    const char *file_or_dir;
+    char *search_text;
+    char *file_or_dir;
 } GrepOptions;
 
 void print_usage(const char *prog_name);

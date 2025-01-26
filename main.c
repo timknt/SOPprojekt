@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "greppy_args.h"
+#include "readFile.h"
 
 int main(int argc, char *argv[]) {
     GrepOptions options = {0};
@@ -43,6 +46,24 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Arguments processed successfully. Ready to perform the search.\n");
+
+
+    char *filename;
+    if (options.from_stdin) {
+        filename = "/dev/stdin";
+    } else {
+        filename = options.file_or_dir;
+    }
+
+    char *content = readFile(filename);
+    if (content == NULL) {
+        fprintf(stderr, "Fehler beim Lesen der Datei\n");
+        return EXIT_FAILURE;
+    }
+
+    printf("Dateiinhalt:\n%s\n", content);
+
+    free(content);
 
     return 0;
 }

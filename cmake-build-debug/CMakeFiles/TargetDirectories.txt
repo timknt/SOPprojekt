@@ -1,3 +1,0 @@
-/Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt/cmake-build-debug/CMakeFiles/Main.dir
-/Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt/cmake-build-debug/CMakeFiles/rebuild_cache.dir

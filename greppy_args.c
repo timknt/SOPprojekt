@@ -55,6 +55,9 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
 
     if (optind < argc) {
         options->file_or_dir = argv[optind++];
+        if (strcmp(options->file_or_dir, "-") == 0) {
+            options->from_stdin = true;
+        }
     } else {
         options->from_stdin = true;
     }
@@ -63,11 +66,6 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
 void validate_arguments(GrepOptions *options) {
     if (options->search_text == NULL) {
         fprintf(stderr, "Error: search_text is required.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (options->file_or_dir && options->file_or_dir[0] == '-') {
-        fprintf(stderr, "Error: Invalid argument '%s'. No dashes allowed as file or directory name.\n", options->file_or_dir);
         exit(EXIT_FAILURE);
     }
 

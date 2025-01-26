@@ -1,4 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt -B /Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt/cmake-build-debug
--- Configuring done (0.0s)
--- Generating done (0.0s)
--- Build files have been written to: /Users/timknuttel/Library/CloudStorage/OneDrive-DeutscheRentenversicherungBund/Informatik_Studium/3.Semester/Systemnahe_Programmierung/CLion_Workspace/SOPprojekt/cmake-build-debug
