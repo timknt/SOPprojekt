@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include <unistd.h>
 #include "greppy_args.h"
 
@@ -19,47 +19,55 @@ void print_usage(const char *prog_name) {
 
 void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     int opt;
+    int positional_args = 0;
 
     while ((opt = getopt(argc, argv, "qm:cri")) != -1) {
         switch (opt) {
             case 'q':
                 options->quiet = true;
-                break;
+            break;
             case 'm':
                 options->max_count_set = true;
-                options->max_count = atoi(optarg);
-                break;
+            options->max_count = atoi(optarg);
+            break;
             case 'c':
                 options->count = true;
-                break;
+            break;
             case 'r':
                 options->recursive = true;
-                break;
+            break;
             case 'i':
                 options->case_insensitive = true;
-                break;
-            case '?':
+            break;
             default:
                 print_usage(argv[0]);
-                exit(EXIT_FAILURE);
+            exit(EXIT_FAILURE);
         }
     }
 
-    if (optind < argc) {
-        options->search_text = argv[optind++];
-    } else {
-        fprintf(stderr, "Error: search_text is required\n");
+    for (int i = optind; i < argc; i++) {
+        if (positional_args == 0) {
+            options->search_text = argv[i];
+            positional_args++;
+        } else if (positional_args == 1) {
+            options->file_or_dir = argv[i];
+            positional_args++;
+        } else {
+            fprintf(stderr, "Error: Too many arguments provided. Only 'search_text' and an optional 'file_or_dir' are allowed.\n");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    if (options->search_text == NULL) {
+        fprintf(stderr, "Error: search_text is required.\n");
         print_usage(argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    if (optind < argc) {
-        options->file_or_dir = argv[optind++];
-        if (strcmp(options->file_or_dir, "-") == 0) {
-            options->from_stdin = true;
-        }
-    } else {
-        options->from_stdin = true;
+    if (options->recursive && positional_args < 2) {
+        fprintf(stderr, "Error: Recursive search (-r) requires both 'search_text' and a file/directory.\n");
+        print_usage(argv[0]);
+        exit(EXIT_FAILURE);
     }
 }
 
