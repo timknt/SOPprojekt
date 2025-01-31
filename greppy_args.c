@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "greppy_args.h"
+#include "output.h"
 
 void print_usage(const char *prog_name) {
     printf("Usage: %s [options] \"search_text\" [file/dir]\n", prog_name);
@@ -48,7 +49,7 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     if (optind < argc) {
         options->search_text = argv[optind++];
     } else {
-        fprintf(stderr, "Error: search_text is required\n");
+        writeError("Error: search_text is required.\n");
         print_usage(argv[0]);
         exit(EXIT_FAILURE);
     }
@@ -65,11 +66,11 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
 
 void validate_arguments(GrepOptions *options) {
     if (options->search_text == NULL) {
-        fprintf(stderr, "Error: search_text is required.\n");
+        writeError("Error: search_text is required.\n");
         exit(EXIT_FAILURE);
     }
 
     if (options->from_stdin) {
-        printf("Reading from stdin. Please provide input:\n");
+        writeOutput("Reading from stdin. Please provide input:\n");
     }
 }
