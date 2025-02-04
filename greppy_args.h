@@ -15,7 +15,7 @@ typedef struct {
     char *file_or_dir;
 } GrepOptions;
 
-void print_usage(const char *prog_name);
+void print_usage();
 void parse_arguments(int argc, char *argv[], GrepOptions *options);
 void validate_arguments(GrepOptions *options);
 

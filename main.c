@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "greppy_args.h"
 #include "readFile.h"
@@ -24,7 +22,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (options.count) {
-        printf("Match count will be displayed instead of matches.\n");
+        printf("Matchcount will be displayed instead of matches.\n");
     }
 
     if (options.max_count_set) {
@@ -32,21 +30,16 @@ int main(int argc, char *argv[]) {
     }
 
     if (options.from_stdin) {
-        printf("Reading input from stdin. Enter text:\n");
+        printf("Reading input from stdin. Please provide input:\n");
     }
 
     if (options.search_text) {
         printf("Searching for: %s\n", options.search_text);
     }
 
-    if (options.file_or_dir) {
+    if (options.file_or_dir && !options.from_stdin) {
         printf("Searching in: %s\n", options.file_or_dir);
-    } else {
-        printf("No file or directory specified. Defaulting to stdin.\n");
     }
-
-    printf("Arguments processed successfully. Ready to perform the search.\n");
-
 
     char *filename;
     if (options.from_stdin) {
