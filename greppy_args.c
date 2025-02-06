@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "greppy_args.h"
+#include "output.h"
 
 void print_usage() {
     printf("Usage: greppy [options] \"search_text\" [file/dir]\n");
