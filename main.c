@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "greppy_args.h"
+#include "output.h"
 #include "readFile.h"
 
 int main(int argc, char *argv[]) {
