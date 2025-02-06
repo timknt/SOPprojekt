@@ -8,4 +8,6 @@ add_executable(Main
         greppy_args.c
         linkedList.c
         readFile.c
+        caseInsensitive.c
+        count.c
         output.c)
