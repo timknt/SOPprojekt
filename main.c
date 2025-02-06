@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "greppy_args.h"
+#include "output.h"
 #include "readFile.h"
 
 int main(int argc, char *argv[]) {
@@ -12,40 +13,40 @@ int main(int argc, char *argv[]) {
     validate_arguments(&options);
 
     if (options.quiet) {
-        printf("Quiet mode enabled. No output will be displayed.\n");
+        writeOutput("Quiet mode enabled. No output will be displayed.\n");
     }
 
     if (options.recursive) {
-        printf("Recursive search enabled.\n");
+        writeOutput("Recursive search enabled.\n");
     }
 
     if (options.case_insensitive) {
-        printf("Case-insensitive search enabled.\n");
+        writeOutput("Case-insensitive search enabled.\n");
     }
 
     if (options.count) {
-        printf("Match count will be displayed instead of matches.\n");
+        writeOutput("Match count will be displayed instead of matches.\n");
     }
 
     if (options.max_count_set) {
-        printf("Maximum number of matches to display: %d\n", options.max_count);
+        writeOutput("Maximum number of matches to display: %d\n", options.max_count);
     }
 
     if (options.from_stdin) {
-        printf("Reading input from stdin. Enter text:\n");
+        writeOutput("Reading input from stdin. Enter text:\n");
     }
 
     if (options.search_text) {
-        printf("Searching for: %s\n", options.search_text);
+        writeOutput("Searching for: %s\n", options.search_text);
     }
 
     if (options.file_or_dir) {
-        printf("Searching in: %s\n", options.file_or_dir);
+        writeOutput("Searching in: %s\n", options.file_or_dir);
     } else {
-        printf("No file or directory specified. Defaulting to stdin.\n");
+        writeOutput("No file or directory specified. Defaulting to stdin.\n");
     }
 
-    printf("Arguments processed successfully. Ready to perform the search.\n");
+    writeOutput("Arguments processed successfully. Ready to perform the search.\n");
 
 
     char *filename;
@@ -57,11 +58,11 @@ int main(int argc, char *argv[]) {
 
     char *content = readFile(filename);
     if (content == NULL) {
-        fprintf(stderr, "Fehler beim Lesen der Datei\n");
+        writeError("Fehler beim Lesen der Datei\n");
         return EXIT_FAILURE;
     }
 
-    printf("Dateiinhalt:\n%s\n", content);
+    writeOutput("Dateiinhalt:\n%s\n", content);
 
     free(content);
 
