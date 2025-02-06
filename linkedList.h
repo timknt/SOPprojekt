@@ -6,7 +6,7 @@
 #include <string.h>
 
 typedef struct Data {
-    char text [256];
+    char *text;
     int line;
 } Data;
 

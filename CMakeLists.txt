@@ -10,4 +10,5 @@ add_executable(Main
         readFile.c
         caseInsensitive.c
         count.c
-        output.c)
+        output.c
+)

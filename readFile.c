@@ -10,6 +10,7 @@ long getFileSize(FILE *file) {
 char *readFile(char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
+        fprintf(stderr, "File could not be opened\n");
         return NULL;
     }
     long fileSize = getFileSize(file);
@@ -27,10 +28,6 @@ int testReadFile() {
     const char *filename = "Testing/test.txt";
 
     char *content = readFile((char *)filename);
-    if (content == NULL) {
-        fprintf(stderr, "Fehler beim Lesen der Datei\n");
-        return EXIT_FAILURE;
-    }
 
     printf("Dateiinhalt:\n%s\n", content);
 
