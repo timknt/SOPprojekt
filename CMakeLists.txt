@@ -3,5 +3,10 @@ project(SOPprojekt C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(Main main.c greppy_args.c linkedList.c readFile.c
-        count.c)
+add_executable(Maimain.c
+        greppy_args.c
+        linkedList.c
+        readFile.c
+        caseInsensitive.c
+        count.c
+        output.c)
