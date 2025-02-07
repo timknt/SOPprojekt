@@ -30,8 +30,10 @@ int main(int argc, char *argv[]) {
     parse_arguments(argc, argv, &options);
     validate_arguments(&options);
 
-    File *fileList = NULL;
-    int recursiveFileCount = 1;
+    int capacity = 1;
+
+    File *fileList = malloc(1 * sizeof(File));
+    int recursiveFileCount = 0;
 
     if (options.quiet) {
         writeOutput("Quiet mode enabled. No output will be displayed.\n");
@@ -39,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     if (options.recursive) {
         printf("Recursive search enabled.\n");
-        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir);
+        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
     }
 
     if (options.case_insensitive) {
@@ -95,10 +97,10 @@ int main(int argc, char *argv[]) {
             pthread_join(threads[i], NULL);
         }
 
-        printf("NAME: %s CONTENT: %s \n", fileList[recursiveFileCount].fileName, fileList[recursiveFileCount].content);
-        while (recursiveFileCount--) {
-            printf("NAME: %s CONTENT: %s \n", fileList[recursiveFileCount].fileName, fileList[recursiveFileCount].content);
+        for (int i = 0; i <= recursiveFileCount; i++) {
+            printf("NAME: %s CONTENT: %s \n", fileList[i].fileName, fileList[i].content);
         }
+
     }
     free(fileList);
 

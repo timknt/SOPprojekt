@@ -12,6 +12,6 @@ typedef struct {
     char content[16384];  // Adjust size if needed
 } File;
 
-int getFilesInDir(File **fileList, char *glob);
+int getFilesInDir(File **fileList, char *glob, int position, int capacity);
 
 #endif //RECURSIVE_H

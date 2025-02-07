@@ -16,10 +16,9 @@ int filter(const struct dirent *name)
     return 1;
 }
 
-int getFilesInDir(File **fileList, char *glob) {
+int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
     struct dirent *entry;
-    int entryCount = 0;
-    int capacity = 0;
+    int entryCount = position;
     printf("Searching Path: %s\n", glob);
 
     DIR *dir = opendir(glob);
@@ -33,27 +32,26 @@ int getFilesInDir(File **fileList, char *glob) {
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
             continue;  // Skip current and parent directories
         }
+        entryCount++;
 
         char fullpath[PATH_MAX];
         snprintf(fullpath, 256, "%s/%s", glob, entry->d_name);
         printf("Found: %s \n", fullpath);
+        if (entryCount > capacity) {
+            capacity = 2 * entryCount;
+            File* temp = realloc(*fileList, capacity * sizeof(File));
+            *fileList = temp;
+        }
         if (entry->d_type == DT_REG) {
-            entryCount++;
 
-            if (entryCount > capacity) {
-                capacity = 2 * (entryCount + 1);
-                File* temp = realloc(*fileList, capacity * sizeof(File));
-                *fileList = temp;
-            }
-
-            strncpy((*fileList)[entryCount].fileName, fullpath, PATH_MAX);
-            (*fileList)[entryCount].fileName[PATH_MAX - 1] = '\0';  // Ensure null-termination
-            strcpy((*fileList)[entryCount].content, "");  // Empty content for now
+            strncpy((*fileList)[entryCount-1].fileName, fullpath, PATH_MAX);
+            (*fileList)[entryCount-1].fileName[PATH_MAX - 1] = '\0';  // Ensure null-termination
+            strcpy((*fileList)[entryCount-1].content, "");  // Empty content for now
         }
         if (entry->d_type == DT_DIR) {
-            entryCount += getFilesInDir(fileList, fullpath);
+            entryCount += getFilesInDir(fileList, fullpath, entryCount-1, capacity);
         }
     }
     closedir(dir);
-    return entryCount;
+    return entryCount - position -1;
 }
