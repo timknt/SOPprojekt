@@ -1,10 +1,28 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <dirent.h>
+#include<pthread.h>
 #include <string.h>
 
 #include "greppy_args.h"
+#include "recursive.h"
 #include "output.h"
 #include "readFile.h"
+
+void *readFileContent(void *arg) {
+    File *file = (File*)arg;
+
+    printf("FileName %s\n", file->fileName);
+
+    char *content = readFile(file->fileName);
+
+    printf("Dateiinhalt:\n%s\n", content);
+    if (content == NULL) {
+        pthread_exit(NULL);
+    }
+    strcpy(file->content, content);
+    free(content);
+    pthread_exit(NULL);
+}
 
 int main(int argc, char *argv[]) {
     GrepOptions options = {0};
@@ -12,12 +30,16 @@ int main(int argc, char *argv[]) {
     parse_arguments(argc, argv, &options);
     validate_arguments(&options);
 
+    File *fileList = NULL;
+    int recursiveFileCount = 1;
+
     if (options.quiet) {
         writeOutput("Quiet mode enabled. No output will be displayed.\n");
     }
 
     if (options.recursive) {
-        writeOutput("Recursive search enabled.\n");
+        printf("Recursive search enabled.\n");
+        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir);
     }
 
     if (options.case_insensitive) {
@@ -56,15 +78,29 @@ int main(int argc, char *argv[]) {
         filename = options.file_or_dir;
     }
 
-    char *content = readFile(filename);
-    if (content == NULL) {
-        writeError("Fehler beim Lesen der Datei\n");
-        return EXIT_FAILURE;
+    if (recursiveFileCount == 0 || fileList == NULL) {
+        char *content = readFile(filename);
+
+        writeOutput("Dateiinhalt:\n%s\n", content);
+        free(content);
+    } else {
+        writeOutput("FileInfo\n");
+
+        pthread_t threads[recursiveFileCount];
+
+        for (int i = 0; i <= recursiveFileCount; i++) {
+            pthread_create(&threads[i], NULL, readFileContent, &fileList[i]);
+        }
+        for (int i = 0; i <= recursiveFileCount; i++) {
+            pthread_join(threads[i], NULL);
+        }
+
+        printf("NAME: %s CONTENT: %s \n", fileList[recursiveFileCount].fileName, fileList[recursiveFileCount].content);
+        while (recursiveFileCount--) {
+            printf("NAME: %s CONTENT: %s \n", fileList[recursiveFileCount].fileName, fileList[recursiveFileCount].content);
+        }
     }
-
-    writeOutput("Dateiinhalt:\n%s\n", content);
-
-    free(content);
+    free(fileList);
 
     return 0;
 }

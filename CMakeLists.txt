@@ -11,4 +11,5 @@ add_executable(Main
         caseInsensitive.c
         count.c
         output.c
+        recursive.c
 )
