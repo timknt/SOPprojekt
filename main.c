@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "greppy_args.h"
 #include "output.h"
@@ -40,14 +38,9 @@ int main(int argc, char *argv[]) {
         writeOutput("Searching for: %s\n", options.search_text);
     }
 
-    if (options.file_or_dir) {
+    if (options.file_or_dir && !options.from_stdin) {
         writeOutput("Searching in: %s\n", options.file_or_dir);
-    } else {
-        writeOutput("No file or directory specified. Defaulting to stdin.\n");
     }
-
-    writeOutput("Arguments processed successfully. Ready to perform the search.\n");
-
 
     char *filename;
     if (options.from_stdin) {
