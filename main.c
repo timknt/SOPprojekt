@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
         writeError("Fehler beim Lesen der Datei\n");
         return EXIT_FAILURE;
     }
-
+    search(filename, options.search_text, options.max_count_set ? options.max_count : -1);
     writeOutput("Dateiinhalt:\n%s\n", content);
 
     free(content);
