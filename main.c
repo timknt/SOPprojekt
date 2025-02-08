@@ -11,11 +11,8 @@
 void *readFileContent(void *arg) {
     File *file = (File*)arg;
 
-    printf("FileName %s\n", file->fileName);
-
     char *content = readFile(file->fileName);
 
-    printf("Dateiinhalt:\n%s\n", content);
     if (content == NULL) {
         pthread_exit(NULL);
     }
