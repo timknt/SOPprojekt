@@ -1,10 +1,6 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 typedef struct Data {
     char *text;
     int line;

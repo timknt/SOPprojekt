@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (options.count) {
-        writeOutput("Matchcount will be displayed instead of matches.\n");
+        writeOutput("Match count will be displayed instead of matches.\n");
     }
 
     if (options.max_count_set) {

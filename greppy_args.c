@@ -85,7 +85,7 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     options->search_text = argv[optind++];
 
     if (strcmp(options->search_text, "-") == 0) {
-        fprintf(stderr, "Error: - muste be put after the search_text to enable stin\n");
+        fprintf(stderr, "Error: - must be put after the search_text to enable stin\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
