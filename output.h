@@ -1,9 +1,8 @@
-//
-// Created by Adrian Stelter on 31.01.25.
-//
-
 #ifndef OUTPUT_H
 #define OUTPUT_H
+
+#include <stdarg.h>
+#include <_stdio.h>
 
 void writeError(const char* format, ...);
 void writeOutput(const char* format, ...);

@@ -1,9 +1,4 @@
-//
-// Created by Adrian Stelter on 31.01.25.
-//
-
-#include <stdarg.h>
-#include <_stdio.h>
+#include "output.h"
 
 void writeError(const char* format, ...) {
     va_list args;
