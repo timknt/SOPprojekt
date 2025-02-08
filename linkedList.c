@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "linkedList.h"
+
 
 Node* createNode(Data data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
