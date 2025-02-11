@@ -25,6 +25,8 @@ void printList(Node* head);
 
 void freeList(Node** head);
 
+int getLength(Node* head);
+
 void concatenateLists(Node** head1, Node** head2);
 
 int testLinkedList();

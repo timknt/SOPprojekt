@@ -57,6 +57,16 @@ void printList(Node* head) {
     }
 }
 
+int getLength(Node* head) {
+    int count = 0;
+    Node* temp = head;
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
 void freeList(Node** head) {
     while (*head != NULL) {
        Node* temp = *head;
