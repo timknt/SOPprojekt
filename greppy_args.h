@@ -2,6 +2,11 @@
 #define GREPPY_ARGS_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "output.h"
 
 typedef struct {
     bool quiet;

@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "linkedList.h"
+#include "output.h"
 
 void search(const char *text, const char *searchText, Node **head) {
+    if (!text || !searchText || !head) {
+        return;
+    }
+
     int line = 1;
     const char *currentLine = text;
     const char *match;
@@ -14,9 +19,10 @@ void search(const char *text, const char *searchText, Node **head) {
 
         char *lineCopy = (char *)malloc(lineLength + 1);
         if (!lineCopy) {
-            perror("Memory allocation failed");
+            writeError("Memory allocation failed");
             return;
         }
+
         strncpy(lineCopy, currentLine, lineLength);
         lineCopy[lineLength] = '\0';
 
@@ -24,6 +30,10 @@ void search(const char *text, const char *searchText, Node **head) {
         while (match) {
             Data result;
             result.text = strdup(lineCopy);
+            if (!result.text) {
+                free(lineCopy);
+                return;
+            }
             result.line = line;
             result.startPosition = (int)(match - lineCopy);
 

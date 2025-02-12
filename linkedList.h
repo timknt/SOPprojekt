@@ -1,6 +1,9 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 typedef struct Data {
     char *text;
     int line;
@@ -22,7 +25,9 @@ void printList(Node* head);
 
 void freeList(Node** head);
 
-void concatenateLists(Node** head1, Node* head2);
+int getLength(Node* head);
+
+void concatenateLists(Node** head1, Node** head2);
 
 int testLinkedList();
 

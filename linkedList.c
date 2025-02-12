@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "linkedList.h"
-
 
 Node* createNode(Data data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -60,27 +57,36 @@ void printList(Node* head) {
     }
 }
 
+int getLength(Node* head) {
+    int count = 0;
+    Node* temp = head;
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
 void freeList(Node** head) {
-    Node* temp;
     while (*head != NULL) {
-        temp = *head;
+       Node* temp = *head;
         *head = (*head)->next;
         free(temp);
     }
+    *head = NULL;
 }
 
-void concatenateLists(Node** head1, Node* head2) {
+void concatenateLists(Node** head1, Node** head2) {
     if (*head1 == NULL) {
-        *head1 = head2;
-        return;
+        *head1 = *head2;
+    } else {
+        Node* temp = *head1;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = *head2;
     }
-
-    Node* temp = *head1;
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-
-    temp->next = head2;
+    *head2 = NULL;
 }
 
 int testLinkedList() {
@@ -125,7 +131,7 @@ int testLinkedList() {
         printf("\nListe 2:\n");
         printList(list2);
 
-        concatenateLists(&list1, list2);
+        concatenateLists(&list1, &list2);
 
         printf("\nListe 1 nach dem Verbinden:\n");
         printList(list1);

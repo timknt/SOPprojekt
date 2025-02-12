@@ -3,30 +3,22 @@
 #include<pthread.h>
 #include <string.h>
 
+#include "caseInsensitive.h"
 #include "greppy_args.h"
 #include "recursive.h"
 #include "output.h"
 #include "readFile.h"
+#include "linkedList.h"
+#include "search.h"
 #include "thread.h"
 
-int main(int argc, char *argv[]) {
-    GrepOptions options = {0};
-
-    parse_arguments(argc, argv, &options);
-    validate_arguments(&options);
-
-    int capacity = 1;
-
-    File *fileList = malloc(capacity * sizeof(File));
-    int recursiveFileCount = 0;
-
+void checkOptions(GrepOptions options) {
     if (options.quiet) {
         writeOutput("Quiet mode enabled. No output will be displayed.\n");
     }
 
     if (options.recursive) {
         printf("Recursive search enabled.\n");
-        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
     }
 
     if (options.case_insensitive) {
@@ -52,28 +44,39 @@ int main(int argc, char *argv[]) {
     if (options.file_or_dir && !options.from_stdin) {
         writeOutput("Searching in: %s\n", options.file_or_dir);
     }
+}
 
-    char *filename;
+int main(int argc, char *argv[]) {
+    GrepOptions options = {0};
+
+    parse_arguments(argc, argv, &options);
+    validate_arguments(&options);
+
+    checkOptions(options);
+
     if (options.from_stdin) {
-        filename = "/dev/stdin";
-    } else {
-        filename = options.file_or_dir;
+        options.from_stdin = "/dev/stdin";
+    }
+    if (options.case_insensitive) {
+        caseInsensitive(options.search_text);
     }
 
-    if (recursiveFileCount == 0 || fileList == NULL) {
-        char *content = readFile(filename);
+    Node *head = NULL;
+    char *content = NULL;
 
-        writeOutput("Dateiinhalt:\n%s\n", content);
-        free(content);
-    } else {
-        writeOutput("FileInfo\n");
+    int capacity = 1;
 
+    File *fileList = malloc(capacity * sizeof(File));
+    int recursiveFileCount = 0;
+
+    if (options.recursive) {
+        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
         pthread_t threads[recursiveFileCount];
 
         ThreadData threadData[recursiveFileCount];
 
         for (int i = 0; i <= recursiveFileCount; i++) {
-           threadData[i].file = &fileList[i];
+            threadData[i].file = &fileList[i];
             threadData[i].results = NULL;
             threadData[i].searchText = strdup(options.search_text);
         }
@@ -88,8 +91,51 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i <= recursiveFileCount; i++) {
             printf("NAME: %s CONTENT: %s \n", fileList[i].fileName, fileList[i].content);
         }
-
+        //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
+    else {
+        content = readFile(options.file_or_dir);
+        if (content == NULL) {
+            writeError("Error reading file\n");
+            return EXIT_FAILURE;
+        }
+        if (options.case_insensitive) {
+            caseInsensitive(content);
+        }
+
+        search(content, options.search_text, &head);
+    }
+
+    if (head == NULL) writeError("Error searching fileContent\n");
+
+    int matchCount = getLength(head);
+
+    if (options.quiet) {
+        if (matchCount > 0) {
+            return EXIT_SUCCESS;
+        }
+        return EXIT_FAILURE;
+    }
+
+    if (options.count&&!options.max_count_set) {
+        writeOutput("Total count of matches: %d\n", matchCount);
+        return EXIT_SUCCESS;
+    }
+
+    if (options.count&&options.max_count_set) {
+        if (matchCount > options.max_count_set) {
+            writeOutput("Total count of matches found until limit: %d\n", options.max_count);
+        }
+        else {
+            writeOutput("Total count of matches until: %d\n", matchCount);
+        }
+        return EXIT_SUCCESS;
+    }
+
+    //printResult(head, options.max_count_set, options.max_count)
+
+    free(content);
+    freeList(&head);
     free(fileList);
 
     return 0;
