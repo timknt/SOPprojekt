@@ -1,23 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "greppy_args.h"
-#include "output.h"
 
 void print_usage() {
-    printf("Usage: greppy [options] \"search_text\" [file/dir]\n");
-    printf("Variables:\n");
-    printf("  \"search_text\" Text to search for (required)\n");
-    printf("  [file/dir]    File or directory to search in\n");
-    printf("Options:\n");
-    printf("  -q               Quiet mode, no output, only exit code\n");
-    printf("  -m {Number}      Maximum number of matches to output\n");
-    printf("  -c               Output the count of matches\n");
-    printf("  -r               Search recursively in directories\n");
-    printf("  -i               Case-insensitive search\n");
-    printf("  -h               Show this help message\n");
-    printf("  \"search_text\" -  Read input from stdin\n");
+    writeOutput("Usage: greppy [options] \"search_text\" [file/dir]\n");
+    writeOutput("Variables:\n");
+    writeOutput("  \"search_text\" Text to search for (required)\n");
+    writeOutput("  [file/dir]    File or directory to search in\n");
+    writeOutput("Options:\n");
+    writeOutput("  -q               Quiet mode, no output, only exit code\n");
+    writeOutput("  -m {Number}      Maximum number of matches to output\n");
+    writeOutput("  -c               Output the count of matches\n");
+    writeOutput("  -r               Search recursively in directories\n");
+    writeOutput("  -i               Case-insensitive search\n");
+    writeOutput("  -h               Show this help message\n");
+    writeOutput("  \"search_text\" -  Read input from stdin\n");
 }
 
 void setStandardArgs(GrepOptions *options) {
@@ -48,13 +43,13 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
                 options->max_count = strtol(optarg, &endptr, 10);
 
                 if (*endptr != '\0') {
-                     fprintf(stderr, "Error: Invalid number for -m option.\n");
-                     exit(EXIT_FAILURE);
+                    writeError("Error: Invalid number for -m option.\n");
+                    exit(EXIT_FAILURE);
                 }
 
                 if (options->max_count < 0) {
-                    fprintf(stderr, "Error: max_count cannot be negative.\n");
-                     exit(EXIT_FAILURE);
+                    writeError("Error: Invalid number for -m option.\n");
+                    exit(EXIT_FAILURE);
                 }
                 break;
             case 'c':
@@ -77,7 +72,7 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     }
 
     if (optind >= argc) {
-        fprintf(stderr, "Error: search_text is required.\n");
+        writeError("Error: search_text is required.\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
@@ -85,7 +80,7 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     options->search_text = argv[optind++];
 
     if (strcmp(options->search_text, "-") == 0) {
-        fprintf(stderr, "Error: - must be put after the search_text to enable stin\n");
+        writeError("Error: - must be put after the search_text to enable stin.\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
@@ -99,7 +94,7 @@ void parse_arguments(int argc, char *argv[], GrepOptions *options) {
     }
 
     if (optind < argc) {
-        fprintf(stderr, "Error: Too many arguments.\n");
+        writeError("Error: Too many arguments.\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
@@ -109,17 +104,17 @@ void validate_arguments(GrepOptions *options) {
 
     if (options->from_stdin){
        if (options->file_or_dir != NULL && strcmp(options->file_or_dir, "-") != 0) {
-           fprintf(stderr, "Error: You must specify a file or directory unless reading from stdin (-).\n");
+           writeError("Error: You must specify a file or directory unless reading from stdin (-).\n");
            exit(EXIT_FAILURE);
        }
          if (options->recursive) {
-             fprintf(stderr, "Error: Cannot use -r when reading from stdin.\n");
+             writeError("Error: Cannot use -r when reading from stdin.\n");
              print_usage();
              exit(EXIT_FAILURE);
         }
        } else {
            if (options->file_or_dir == NULL) {
-               fprintf(stderr, "Error: You must specify a file unless reading from stdin (-).\n");
+               writeError("Error: You must specify a file unless reading from stdin (-).\n");
                exit(EXIT_FAILURE);
            }
     }
