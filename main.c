@@ -6,6 +6,7 @@
 #include "readFile.h"
 #include "linkedList.h"
 #include "search.h"
+#include "count.h"
 
 void checkOptions(GrepOptions options) {
     if (options.quiet) {
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]) {
 
     if (head == NULL) writeError("Error searching fileContent\n");
 
-    int matchCount = getLength(head);
+    int matchCount = count(&head);
 
     if (options.quiet) {
         if (matchCount > 0) {
