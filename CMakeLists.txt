@@ -12,5 +12,6 @@ add_executable(Main
         count.c
         output.c
         recursive.c
+        thread.c
         search.c
 )
