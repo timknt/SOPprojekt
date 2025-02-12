@@ -19,7 +19,6 @@ int filter(const struct dirent *name)
 int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
     struct dirent *entry;
     int entryCount = position;
-    printf("Searching Path: %s\n", glob);
 
     DIR *dir = opendir(glob);
 
@@ -36,7 +35,6 @@ int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
 
         char fullpath[PATH_MAX];
         snprintf(fullpath, 256, "%s/%s", glob, entry->d_name);
-        printf("Found: %s \n", fullpath);
         if (entryCount > capacity) {
             capacity = 2 * entryCount;
             File* temp = realloc(*fileList, capacity * sizeof(File));

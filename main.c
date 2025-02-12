@@ -3,24 +3,11 @@
 #include<pthread.h>
 #include <string.h>
 
-
 #include "greppy_args.h"
 #include "recursive.h"
 #include "output.h"
 #include "readFile.h"
-
-void *readFileContent(void *arg) {
-    File *file = (File*)arg;
-
-    char *content = readFile(file->fileName);
-
-    if (content == NULL) {
-        pthread_exit(NULL);
-    }
-    strcpy(file->content, content);
-    free(content);
-    pthread_exit(NULL);
-}
+#include "thread.h"
 
 int main(int argc, char *argv[]) {
     GrepOptions options = {0};
@@ -30,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     int capacity = 1;
 
-    File *fileList = malloc(1 * sizeof(File));
+    File *fileList = malloc(capacity * sizeof(File));
     int recursiveFileCount = 0;
 
     if (options.quiet) {
@@ -83,8 +70,16 @@ int main(int argc, char *argv[]) {
 
         pthread_t threads[recursiveFileCount];
 
+        ThreadData threadData[recursiveFileCount];
+
         for (int i = 0; i <= recursiveFileCount; i++) {
-            pthread_create(&threads[i], NULL, readFileContent, &fileList[i]);
+           threadData[i].file = &fileList[i];
+            threadData[i].results = NULL;
+            threadData[i].searchText = strdup(options.search_text);
+        }
+
+        for (int i = 0; i <= recursiveFileCount; i++) {
+            pthread_create(&threads[i], NULL, greppyThread, &threadData[i]);
         }
         for (int i = 0; i <= recursiveFileCount; i++) {
             pthread_join(threads[i], NULL);

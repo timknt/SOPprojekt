@@ -2,6 +2,8 @@
 // Created by Adrian Stelter on 31.01.25.
 //
 
+#include <stddef.h>
+
 #include "linkedList.h"
 
 int count(Node** head, const int max) {
