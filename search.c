@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "linkedList.h"
+#include "output.h"
 
 void search(const char *text, const char *searchText, Node **head) {
     if (!text || !searchText || !head) {
@@ -18,6 +19,7 @@ void search(const char *text, const char *searchText, Node **head) {
 
         char *lineCopy = (char *)malloc(lineLength + 1);
         if (!lineCopy) {
+            writeError("Memory allocation failed")
             return;
         }
 
