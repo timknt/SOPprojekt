@@ -63,13 +63,10 @@ int main(int argc, char *argv[]) {
         //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
     else {
-        content = readFile(options.file_or_dir);
+        content = readFile(options.file_or_dir, options.case_insensitive);
         if (content == NULL) {
             writeError("Error reading file\n");
             return EXIT_FAILURE;
-        }
-        if (options.case_insensitive) {
-            caseInsensitive(content);
         }
 
         search(content, options.search_text, &head);

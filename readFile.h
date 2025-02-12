@@ -7,7 +7,7 @@
 long readFileSize(FILE *file);
 
 // if called, free returned char array
-char *readFile(char *filename);
+char *readFile(char *filename, bool case_insensitive);
 
 int testReadFile();
 
