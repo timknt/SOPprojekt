@@ -19,7 +19,7 @@ void search(const char *text, const char *searchText, Node **head) {
 
         char *lineCopy = (char *)malloc(lineLength + 1);
         if (!lineCopy) {
-            writeError("Memory allocation failed")
+            writeError("Memory allocation failed");
             return;
         }
 
