@@ -13,6 +13,7 @@
 #include "count.h"
 #include "thread.h"
 
+
 void checkOptions(GrepOptions options) {
     if (options.quiet) {
         writeOutput("Quiet mode enabled. No output will be displayed.\n");
@@ -132,10 +133,13 @@ int main(int argc, char *argv[]) {
         return EXIT_SUCCESS;
     }
 
-    //printResult(head, options.max_count_set, options.max_count)
+
+    printResult(head, options.max_count_set, options.max_count, options.search_text);
 
     free(content);
     freeList(&head);
+    free(options.file_or_dir);
+    free(options.search_text);
 
     return 0;
 }
