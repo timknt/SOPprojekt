@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
         }
 
         for (int i = 0; i < recursiveFileCount; i++) {
-            printf("NAME: %s CONTENT: %s \n", fileList[i].fileName, fileList[i].content);
+            concatenateLists(&head, &threadData[i].results);
         }
         //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
