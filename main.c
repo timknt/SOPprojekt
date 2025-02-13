@@ -138,6 +138,8 @@ int main(int argc, char *argv[]) {
 
     free(content);
     freeList(&head);
+    free(options.file_or_dir);
+    free(options.search_text);
 
     return 0;
 }
