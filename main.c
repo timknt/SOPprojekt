@@ -10,6 +10,7 @@
 #include "readFile.h"
 #include "linkedList.h"
 #include "search.h"
+#include "count.h"
 #include "thread.h"
 
 void checkOptions(GrepOptions options) {
@@ -18,7 +19,7 @@ void checkOptions(GrepOptions options) {
     }
 
     if (options.recursive) {
-        printf("Recursive search enabled.\n");
+        writeOutput("Recursive search enabled.\n");
     }
 
     if (options.case_insensitive) {
@@ -94,13 +95,10 @@ int main(int argc, char *argv[]) {
         //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
     else {
-        content = readFile(options.file_or_dir);
+        content = readFile(options.file_or_dir, options.case_insensitive);
         if (content == NULL) {
             writeError("Error reading file\n");
             return EXIT_FAILURE;
-        }
-        if (options.case_insensitive) {
-            caseInsensitive(content);
         }
 
         search(content, options.search_text, &head);
@@ -108,7 +106,7 @@ int main(int argc, char *argv[]) {
 
     if (head == NULL) writeError("Error searching fileContent\n");
 
-    int matchCount = getLength(head);
+    int matchCount = count(&head);
 
     if (options.quiet) {
         if (matchCount > 0) {
@@ -136,7 +134,6 @@ int main(int argc, char *argv[]) {
 
     free(content);
     freeList(&head);
-    free(fileList);
 
     return 0;
 }

@@ -5,7 +5,7 @@
 
 #ifndef COUNT_H
 
-int count(Node** head, int max);
+int count(Node** head);
 
 #define COUNT_H
 
