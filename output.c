@@ -39,7 +39,7 @@ void printResult(Node* head, int max_count_set, int max_count, const char* searc
 
         printf("Line %d, Pos %d: ", current->data.line, startPos);
         printf("%.*s", startPos, lineText);
-        printf("\033[1m%.*s\033[0m", searchLen, lineText + startPos);
+        printf("\033[31m%.*s\033[0m", searchLen, lineText + startPos);
         printf("%s\n", lineText + startPos + searchLen);
 
         count++;
