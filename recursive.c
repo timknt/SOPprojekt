@@ -1,14 +1,10 @@
-//
-// Created by Adrian Stelter on 03.02.25.
-//
 #include "recursive.h"
+#include "output.h"
 
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "output.h"
 
 #define PATH_MAX 4096
 
@@ -25,7 +21,7 @@ int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
     DIR *dir = opendir(glob);
 
     if (!dir) {
-        perror("Error opening directory");
+        writeError("Error opening directory");
         return entryCount;
     }
 
@@ -37,7 +33,7 @@ int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
 
         char fullpath[PATH_MAX];
         snprintf(fullpath, PATH_MAX, "%s/%s", glob, entry->d_name);
-        if (entryCount > capacity) {
+        if (entryCount >= capacity) {
             capacity = 2 * entryCount;
             File* temp = realloc(*fileList, capacity * sizeof(File));
             if (temp == NULL) {
@@ -54,7 +50,7 @@ int getFilesInDir(File **fileList, char *glob, int position, int capacity) {
             strcpy((*fileList)[entryCount-1].content, "");  // Empty content for now
         }
         if (entry->d_type == DT_DIR) {
-            entryCount = getFilesInDir(fileList, fullpath, entryCount-1, capacity);
+            entryCount = getFilesInDir(fileList, fullpath, entryCount, capacity);
         }
     }
     closedir(dir);
