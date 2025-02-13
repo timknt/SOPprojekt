@@ -72,25 +72,27 @@ int main(int argc, char *argv[]) {
 
     if (options.recursive) {
         recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
+        writeOutput("RecursiveFileCount: %d\n", recursiveFileCount);
         pthread_t threads[recursiveFileCount];
 
         ThreadData threadData[recursiveFileCount];
 
         for (int i = 0; i <= recursiveFileCount; i++) {
+            Node *head = NULL;
             threadData[i].file = &fileList[i];
-            threadData[i].results = NULL;
+            threadData[i].results = head;
             threadData[i].searchText = strdup(options.search_text);
             threadData[i].case_insensitive = options.case_insensitive;
         }
 
-        for (int i = 0; i <= recursiveFileCount; i++) {
+        for (int i = 0; i < recursiveFileCount; i++) {
             pthread_create(&threads[i], NULL, greppyThread, &threadData[i]);
         }
-        for (int i = 0; i <= recursiveFileCount; i++) {
+        for (int i = 0; i < recursiveFileCount; i++) {
             pthread_join(threads[i], NULL);
         }
 
-        for (int i = 0; i <= recursiveFileCount; i++) {
+        for (int i = 0; i < recursiveFileCount; i++) {
             printf("NAME: %s CONTENT: %s \n", fileList[i].fileName, fileList[i].content);
         }
         //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
