@@ -1,3 +1,5 @@
+#include <stdarg.h>
+#include <stdio.h>
 #include "output.h"
 #include "linkedList.h"
 #include <stdio.h>

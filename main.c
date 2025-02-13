@@ -1,12 +1,17 @@
 #include <stdio.h>
+#include <dirent.h>
+#include<pthread.h>
+#include <string.h>
 
 #include "caseInsensitive.h"
 #include "greppy_args.h"
+#include "recursive.h"
 #include "output.h"
 #include "readFile.h"
 #include "linkedList.h"
 #include "search.h"
 #include "count.h"
+#include "thread.h"
 
 
 void checkOptions(GrepOptions options) {
@@ -61,10 +66,38 @@ int main(int argc, char *argv[]) {
     Node *head = NULL;
     char *content = NULL;
 
+    int capacity = 1;
+
+    File *fileList = malloc(capacity * sizeof(File));
+    int recursiveFileCount = 0;
+
     if (options.recursive) {
-        //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
+        recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
+        pthread_t threads[recursiveFileCount];
+
+        ThreadData threadData[recursiveFileCount];
+
+        for (int i = 0; i <= recursiveFileCount; i++) {
+            Node *head = NULL;
+            threadData[i].file = &fileList[i];
+            threadData[i].results = head;
+            threadData[i].searchText = strdup(options.search_text);
+            threadData[i].case_insensitive = options.case_insensitive;
+        }
+
+        for (int i = 0; i < recursiveFileCount; i++) {
+            pthread_create(&threads[i], NULL, greppyThread, &threadData[i]);
+        }
+        for (int i = 0; i < recursiveFileCount; i++) {
+            pthread_join(threads[i], NULL);
+        }
+
+        for (int i = 0; i < recursiveFileCount; i++) {
+            concatenateLists(&head, &threadData[i].results);
+        }
     }
     else {
+        free(fileList);
         content = readFile(options.file_or_dir, options.case_insensitive);
         if (content == NULL) {
             writeError("Error reading file\n");
