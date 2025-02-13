@@ -72,7 +72,6 @@ int main(int argc, char *argv[]) {
 
     if (options.recursive) {
         recursiveFileCount = getFilesInDir(&fileList, options.file_or_dir, recursiveFileCount, capacity);
-        writeOutput("RecursiveFileCount: %d\n", recursiveFileCount);
         pthread_t threads[recursiveFileCount];
 
         ThreadData threadData[recursiveFileCount];
@@ -95,7 +94,6 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < recursiveFileCount; i++) {
             concatenateLists(&head, &threadData[i].results);
         }
-        //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
     else {
         free(fileList);
