@@ -12,6 +12,7 @@ typedef struct {
     File *file;
     Node *results;
     char *searchText;
+    bool case_insensitive;
 } ThreadData;
 
 void *greppyThread(void *arg);

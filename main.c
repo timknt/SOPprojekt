@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
             threadData[i].file = &fileList[i];
             threadData[i].results = NULL;
             threadData[i].searchText = strdup(options.search_text);
+            threadData[i].case_insensitive = options.case_insensitive;
         }
 
         for (int i = 0; i <= recursiveFileCount; i++) {

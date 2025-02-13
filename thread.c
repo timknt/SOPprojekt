@@ -14,7 +14,7 @@ void *greppyThread(void *arg) {
 
     File *file = data->file;
 
-    char *content = readFile(file->fileName);
+    char *content = readFile(file->fileName, data->case_insensitive);
 
     if (content == NULL) {
         pthread_exit(NULL);
