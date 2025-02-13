@@ -98,6 +98,7 @@ int main(int argc, char *argv[]) {
         //recursive(head, options.file_or_dir, options.search_text, options.case_insensitive)
     }
     else {
+        free(fileList);
         content = readFile(options.file_or_dir, options.case_insensitive);
         if (content == NULL) {
             writeError("Error reading file\n");
