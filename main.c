@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (options.count&&options.max_count_set) {
-        if (matchCount > options.max_count_set) {
+        if (matchCount > options.max_count) {
             writeOutput("Total count of matches found until limit: %d\n", options.max_count);
         }
         else {
