@@ -7,6 +7,7 @@
 
 #include "linkedList.h"
 #include "recursive.h"
+#include <stdbool.h>
 
 typedef struct {
     File *file;
