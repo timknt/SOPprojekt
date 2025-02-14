@@ -101,6 +101,8 @@ int main(int argc, char *argv[]) {
         content = readFile(options.file_or_dir, options.case_insensitive);
         if (content == NULL) {
             writeError("Error reading file\n");
+            free(content);
+            freeList(&head);
             return EXIT_FAILURE;
         }
 
@@ -113,13 +115,19 @@ int main(int argc, char *argv[]) {
 
     if (options.quiet) {
         if (matchCount > 0) {
+            free(content);
+            freeList(&head);
             return EXIT_SUCCESS;
         }
+        free(content);
+        freeList(&head);
         return EXIT_FAILURE;
     }
 
     if (options.count&&!options.max_count_set) {
         writeOutput("Total count of matches: %d\n", matchCount);
+        free(content);
+        freeList(&head);
         return EXIT_SUCCESS;
     }
 
@@ -130,6 +138,8 @@ int main(int argc, char *argv[]) {
         else {
             writeOutput("Total count of matches until: %d\n", matchCount);
         }
+        free(content);
+        freeList(&head);
         return EXIT_SUCCESS;
     }
 
