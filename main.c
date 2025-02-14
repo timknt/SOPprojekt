@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     checkOptions(options);
 
     if (options.from_stdin) {
-        options.from_stdin = "/dev/stdin";
+        options.from_stdin = stdin;
     }
     if (options.case_insensitive) {
         caseInsensitive(options.search_text);
