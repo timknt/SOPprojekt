@@ -38,11 +38,11 @@ void printResult(Node* head, int max_count_set, int max_count, const char* searc
         int startPos = current->data.startPosition;
         char* fileName = current->data.fileName;
 
-        printf("%s: ",fileName);
-        printf("Line %d, Pos %d: ", current->data.line, startPos);
-        printf("%.*s", startPos, lineText);
-        printf("\033[31m%.*s\033[0m", searchLen, lineText + startPos);
-        printf("%s\n", lineText + startPos + searchLen);
+        writeOutput("%s: ",fileName);
+        writeOutput("Line %d, Pos %d: ", current->data.line, startPos);
+        writeOutput("%.*s", startPos, lineText);
+        writeOutput("\033[31m%.*s\033[0m", searchLen, lineText + startPos);
+        writeOutput("%s\n", lineText + startPos + searchLen);
 
         count++;
         current = current->next;
