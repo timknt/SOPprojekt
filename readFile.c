@@ -10,9 +10,8 @@ long getFileSize(FILE *file) {
 }
 
 char *readFile(char *filename, bool case_insensitive) {
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen(filename, "r+");
     if (file == NULL) {
-        fprintf(stderr, "File could not be opened\n");
         return NULL;
     }
     long fileSize = getFileSize(file);
