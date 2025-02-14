@@ -56,9 +56,6 @@ int main(int argc, char *argv[]) {
 
     checkOptions(options);
 
-    if (options.from_stdin) {
-        options.from_stdin = stdin;
-    }
     if (options.case_insensitive) {
         caseInsensitive(options.search_text);
     }
@@ -98,7 +95,13 @@ int main(int argc, char *argv[]) {
     }
     else {
         free(fileList);
-        content = readFile(options.file_or_dir, options.case_insensitive);
+
+        if (options.from_stdin) {
+            content = readStdin(options.case_insensitive);
+        } else {
+            content = readFile(options.file_or_dir, options.case_insensitive);
+        }
+
         if (content == NULL) {
             writeError("Error reading file\n");
             free(content);

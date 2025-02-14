@@ -30,6 +30,24 @@ char *readFile(char *filename, bool case_insensitive) {
     return buffer;
 }
 
+char *readStdin(bool case_insensitive) {
+    int size = 4;
+    int charCount = 0;
+    char *buffer = malloc(size);
+    int data;
+    while ((data = fgetc(stdin)) != EOF) { // Read the data from input
+        if (charCount >= size) {
+            buffer = realloc(buffer, 2 * size);
+        }
+        buffer[charCount++] = (char)data;
+    }
+    if (case_insensitive) {
+        caseInsensitive(buffer);
+    }
+
+    return buffer;
+}
+
 int testReadFile() {
     const char *filename = "Testing/test.txt";
 
