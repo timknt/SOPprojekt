@@ -1,4 +1,5 @@
 #include "readFile.h"
+#include <stdbool.h>
 
 #include "caseInsensitive.h"
 

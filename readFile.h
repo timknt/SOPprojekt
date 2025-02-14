@@ -2,7 +2,7 @@
 #define READFILE_H
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
 long readFileSize(FILE *file);
 
