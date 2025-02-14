@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
         search(content, options.search_text, &head);
     }
 
-    if (head == NULL) writeError("Error searching fileContent\n");
+    if (head == NULL) return EXIT_FAILURE;
 
     int matchCount = count(&head);
 
