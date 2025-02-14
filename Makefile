@@ -6,40 +6,40 @@ FLAGS = -g -c -Wall
 LFLAGS  =
 CC  = gcc
 
-all:  a.out
+all:  $(OUT)
 
-a.out: $(OBJS)
-  $(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
+$(OUT): $(OBJS)
+	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
 main.o: main.c
-  $(CC) $(FLAGS) main.c
+	$(CC) $(FLAGS) main.c
 
 greppy_args.o: greppy_args.c
-  $(CC) $(FLAGS) greppy_args.c
+	$(CC) $(FLAGS) greppy_args.c
 
 linkedList.o: linkedList.c
-  $(CC) $(FLAGS) linkedList.c
+	$(CC) $(FLAGS) linkedList.c
 
 readFile.o: readFile.c
-  $(CC) $(FLAGS) readFile.c
+	$(CC) $(FLAGS) readFile.c
 
 caseInsensitive.o: caseInsensitive.c
-  $(CC) $(FLAGS) caseInsensitive.c
+	$(CC) $(FLAGS) caseInsensitive.c
 
 count.o: count.c
-  $(CC) $(FLAGS) count.c
+	$(CC) $(FLAGS) count.c
 
 output.o: output.c
-  $(CC) $(FLAGS) output.c
+	$(CC) $(FLAGS) output.c
 
 recursive.o: recursive.c
-  $(CC) $(FLAGS) recursive.c
+	$(CC) $(FLAGS) recursive.c
 
 thread.o: thread.c
-  $(CC) $(FLAGS) thread.c
+	$(CC) $(FLAGS) thread.c
 
 search.o: search.c
-  $(CC) $(FLAGS) search.c
+	$(CC) $(FLAGS) search.c
 
 clean:
-  rm -f $(OBJS) $(OUT)
+	rm -f $(OBJS) $(OUT)
