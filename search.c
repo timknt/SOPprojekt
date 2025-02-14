@@ -4,7 +4,7 @@
 #include "linkedList.h"
 #include "output.h"
 
-void search(const char *text, const char *searchText, Node **head) {
+void search(const char *text, const char *searchText, Node **head, char *fileName) {
     if (!text || !searchText || !head) {
         return;
     }
@@ -36,6 +36,7 @@ void search(const char *text, const char *searchText, Node **head) {
             }
             result.line = line;
             result.startPosition = (int)(match - lineCopy);
+            result.fileName = fileName;
 
             insertAtTail(head, result);
 

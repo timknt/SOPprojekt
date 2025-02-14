@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
 
-        search(content, options.search_text, &head);
+        search(content, options.search_text, &head, options.file_or_dir);
     }
 
     if (head == NULL) return EXIT_FAILURE;

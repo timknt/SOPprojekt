@@ -20,7 +20,7 @@ void *greppyThread(void *arg) {
 
     char *searchText = data->searchText;
 
-    search(file->content, searchText, &data->results);
+    search(file->content, searchText, &data->results, file->fileName);
 
     free(searchText);
 
