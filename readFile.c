@@ -37,7 +37,8 @@ char *readStdin(bool case_insensitive) {
     int data;
     while ((data = fgetc(stdin)) != EOF) { // Read the data from input
         if (charCount >= size) {
-            buffer = realloc(buffer, 2 * size);
+            size = 2 * size;
+            buffer = (char *)realloc(buffer, size);
         }
         buffer[charCount++] = (char)data;
     }
