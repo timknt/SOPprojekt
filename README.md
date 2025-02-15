@@ -18,18 +18,12 @@ Greppy is a powerful command-line tool for searching text in files and directori
 ### Build Instructions
 1. Clone the repository:
    ```sh
-   git clone <REPOSITORY-URL>
-   cd greppy
+   git clone https://github.com/timknt/SOPprojekt.git
+   cd SOPprojekt
    ```
 2. Create a CMake build:
    ```sh
-   mkdir build && cd build
-   cmake ..
-   make
-   ```
-3. The program is now executable:
-   ```sh
-   ./greppy <search_term> <file/directory>
+   make all
    ```
 
 ## Usage
@@ -44,6 +38,8 @@ The program can be executed with various options:
 - `-c` : Count occurrences
 - `-m <N>` : Set the maximum number of matches
 - `-q` : Suppress output (only exit code)
+- `-h` : help output
+  
 
 ### Example Commands
 - Search for "error" in `log.txt`:
@@ -59,6 +55,11 @@ The program can be executed with various options:
   ./greppy -c debug log.txt
   ```
 
-## Authors
-Developed by Adrian Stelter, Tim Knüttel, and Jakob Hämmelmann.
+
+| GitHub Username                                | Matrikelnummer         |
+|------------------------------------------------|------------------------|
+| [@zitrusgelb](https://github.com/zitrusgelb)   | 5123031                |
+| [@timknt](https://github.com/timknt)           | 5123101                |
+| [@Jakob-H-DEV](https://github.com/Jakob-H-DEV) | 5123113                |
+
 
