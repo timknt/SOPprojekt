@@ -1,67 +1,64 @@
-# Greppy - Ein leistungsstarkes Suchwerkzeug
+# Greppy - A Powerful Search Tool
 
-## Beschreibung
-Greppy ist ein leistungsfähiges Kommandozeilen-Tool zur Textsuche in Dateien und Verzeichnissen. Es unterstützt verschiedene Optionen zur Steuerung der Suche, einschließlich rekursiver Suche, Groß-/Kleinschreibung, Zählmodus und mehr.
+## Description
+Greppy is a powerful command-line tool for searching text in files and directories. It supports various options to control the search, including recursive search, case insensitivity, count mode, and more.
 
 ## Features
-- Unterstützung für rekursive Suche
-- Case-Insensitive-Modus
-- Maximalanzahl an Treffern konfigurierbar
-- Zählen von Übereinstimmungen
-- Ausgabe in verschiedenen Formaten
+- Support for recursive search
+- Case-insensitive mode
+- Configurable maximum number of matches
+- Count occurrences
+- Output in various formats
 
 ## Installation
-### Voraussetzungen
-- C-Compiler (z. B. GCC oder Clang)
-- CMake (für die Erstellung des Build-Systems)
+### Prerequisites
+- C compiler (e.g., GCC or Clang)
+- CMake (for building the project)
 
-### Build-Anleitung
-1. Repository klonen:
+### Build Instructions
+1. Clone the repository:
    ```sh
    git clone <REPOSITORY-URL>
    cd greppy
    ```
-2. CMake-Build erstellen:
+2. Create a CMake build:
    ```sh
    mkdir build && cd build
    cmake ..
    make
    ```
-3. Das Programm ist nun ausführbar:
+3. The program is now executable:
    ```sh
-   ./greppy <Suchbegriff> <Datei/Verzeichnis>
+   ./greppy <search_term> <file/directory>
    ```
 
-## Nutzung
-Das Programm kann mit verschiedenen Optionen aufgerufen werden:
+## Usage
+The program can be executed with various options:
 ```sh
-./greppy [OPTIONEN] <SUCHBEGRIFF> <DATEI/VERZEICHNIS>
+./greppy [OPTIONS] <SEARCH_TERM> <FILE/DIRECTORY>
 ```
 
-### Wichtige Optionen
-- `-r` : Rekursive Suche in Unterverzeichnissen
-- `-i` : Suche ohne Berücksichtigung der Groß-/Kleinschreibung
-- `-c` : Anzahl der Treffer zählen
-- `-m <N>` : Maximale Anzahl an Treffern festlegen
-- `-q` : Keine Ausgabe (nur Exit-Code)
+### Important Options
+- `-r` : Recursive search in subdirectories
+- `-i` : Case-insensitive search
+- `-c` : Count occurrences
+- `-m <N>` : Set the maximum number of matches
+- `-q` : Suppress output (only exit code)
 
-### Beispielaufrufe
-- Suche nach "error" in `log.txt`:
+### Example Commands
+- Search for "error" in `log.txt`:
   ```sh
   ./greppy error log.txt
   ```
-- Rekursive Suche nach "TODO" in `src/`:
+- Recursive search for "TODO" in `src/`:
   ```sh
   ./greppy -r TODO src/
   ```
-- Anzahl der Vorkommen von "debug" zählen:
+- Count occurrences of "debug" in `log.txt`:
   ```sh
   ./greppy -c debug log.txt
   ```
 
-## Lizenz
-Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen sind in der `LICENSE`-Datei zu finden.
-
-## Autor
-Entwickelt von Adrian Stelter, Tim Knüttel und Jakob Hämmelmann.
+## Authors
+Developed by Adrian Stelter, Tim Knüttel, and Jakob Hämmelmann.
 
