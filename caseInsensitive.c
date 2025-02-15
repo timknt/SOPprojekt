@@ -11,7 +11,7 @@ void caseInsensitive(char *string ) {
 }
 
 void testCaseInsensitive() {
-    char *string = malloc(10);
+    char *string = malloc(12);
     strcpy(string, "HeLlo WOrLd");
     caseInsensitive(string);
     printf("%s\n", string);

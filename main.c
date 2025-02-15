@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
 
-        search(content, options.search_text, &head);
+        search(content, options.search_text, &head, options.file_or_dir);
     }
 
     if (head == NULL) return EXIT_FAILURE;
@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (options.count&&options.max_count_set) {
-        if (matchCount > options.max_count_set) {
+        if (matchCount > options.max_count) {
             writeOutput("Total count of matches found until limit: %d\n", options.max_count);
         }
         else {
@@ -145,7 +145,6 @@ int main(int argc, char *argv[]) {
         freeList(&head);
         return EXIT_SUCCESS;
     }
-
 
     printResult(head, options.max_count_set, options.max_count, options.search_text);
 
