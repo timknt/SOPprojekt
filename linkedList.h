@@ -8,6 +8,7 @@ typedef struct Data {
     char *text;
     int line;
     int startPosition;
+    char *fileName;
 } Data;
 
 typedef struct Node {
