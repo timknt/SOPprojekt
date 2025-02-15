@@ -44,17 +44,17 @@ The program can be executed with various options:
 ### Example Commands
 - Search for "error" in `log.txt`:
   ```sh
-  ./greppy error log.txt
+  ./greppy "error" log.txt
   ```
-- Recursive search for "TODO" in `src/`:
+- Recursive "search" for "TODO" in `src/`:
   ```sh
-  ./greppy -r TODO src/
+  ./greppy -r "TODO" src/
   ```
 - Count occurrences of "debug" in `log.txt`:
   ```sh
-  ./greppy -c debug log.txt
+  ./greppy -c "debug" log.txt
   ```
-
+# Authors:
 
 | GitHub Username                                | Matrikelnummer         |
 |------------------------------------------------|------------------------|
